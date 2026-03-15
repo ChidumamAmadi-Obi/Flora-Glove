@@ -4,7 +4,9 @@
 void setup() {
   Serial.begin(115200);
   while (!Serial) delay(10); // wait until serial com has been initialized
-  initMPU(); // initialize MPU
+
+  Wire.begin(); // init i2c communication with mpu
+  mpu.initialize(); // init mpu
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
@@ -18,8 +20,9 @@ void setup() {
 }
 
 void loop() {
-  scanMPU(); // monitor and record MPU sensor data
+  mpuSensorValues = scanMPU(); // monitor and record MPU sensor data
   controlTouchSensors(); // monitor touch sensors (includes LED control)
+  controlVolume(mpuSensorValues,&musicParameters);
   delay(100);
 
 }

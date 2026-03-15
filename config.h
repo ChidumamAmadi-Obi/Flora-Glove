@@ -1,11 +1,13 @@
 #pragma once
 
 #include <stdint.h>
-#include <Adafruit_MPU6050.h>
-#include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include "I2Cdev.h"     
+#include "MPU6050.h"   
 
-// pin numbers
+// PIN NUMBERS
+// SDA 21
+// SCL 22
 #define BUTTON1 34
 #define BUTTON2 35
 #define BUTTON3 32
@@ -14,22 +16,31 @@
 #define LED2 26
 #define LED3 27
 
+// calibration for mpu DONT TOUCH OR CHANGE
+#define X_OFFSET 118
+#define Y_OFFSET 128
+#define Z_OFFSET 258
+
 // other macros
-#define NUM_SONGS 5 // assume there are 5 songs in total
 #define MAX_VOLUME 100
-#define GYRO_THRESHOLD 75 // this controls the threshold at which a music parameter is changed eg if the gyro is greater than 75 degrees inthe x axis the volume will be changed
+#define PRINT_MPU_DATA 0 // see incoming mpu data
+#define PRINT_BLUETOOTH_OUT //see data being sent to ap via bluetooth
+
+// MPU thresholds
+#define POS_THRESHOLD -75
+#define NEG_THRESHOLD 75
+
+// volume control and timing variables
+const unsigned long volControlInterval = 250;
+unsigned long lastVolChange=0;
+unsigned long currentMillis=0;
+int volumeChangePercentage=5;
 
 // structs will be used to pass sensor information easily and cleanly to the application
 typedef struct{ // this struct holds sensor values detected by the MPU
-  float gyroX; // rotation along x axis
-  float gyroY; // rotation along y axis
-  float gyroZ; // rotation along z axis
-
-  float accX; // acceleration along x axis
-  float accY; // acceleration along y axis
-  float accZ; // acceleration along z axis
-
-  float tempurature; // tempurature reccorded by MPU in degrees C
+  int16_t gyroX; // rotation along x axis
+  int16_t gyroY; // rotation along y axis
+  int16_t gyroZ; // rotation along z axis
 }MPUSensorValues;
 typedef struct{
   bool one=0;
@@ -38,12 +49,11 @@ typedef struct{
   bool four=0;
 }Buttons;
 typedef struct{
-  uint8_t volume = 10; // volume can be 0-100
-  uint8_t song = 0;
-  uint8_t pitch = 0;
+  uint8_t volume=50; // volume can be 0-100
 }MusicParameters;
 
 // define structs
-Adafruit_MPU6050 mpu; // makes an MPU object to be used durin initialization
+MPU6050 mpu; // makes an MPU object to be used durin initialization
 MPUSensorValues mpuSensorValues;
+MusicParameters musicParameters;
 Buttons button;
