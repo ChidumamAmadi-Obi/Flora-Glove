@@ -5,6 +5,9 @@
 #include "I2Cdev.h"     
 #include "MPU6050.h"   
 
+#include  "BluetoothSerial.h"
+BluetoothSerial SerialBT;
+
 // PIN NUMBERS
 // SDA 21
 // SCL 22
@@ -36,7 +39,19 @@ unsigned long lastVolChange=0;
 unsigned long currentMillis=0;
 int volumeChangePercentage=5;
 
+// an enum is used to send codes to app via bluetooth
+// the app cannot handle strings so data has to be encoded
+typedef enum{
+  BUTTON_ONE_ON, // 0
+  BUTTON_ONE_OFF, // 1
+  BUTTON_TWO_ON, // 2
+  BUTTON_TWO_OFF, // 3
+  VOLUME_ENCODING=5 // 10
+}InputCodes;
+
 // structs will be used to pass sensor information easily and cleanly to the application
+
+
 typedef struct{ // this struct holds sensor values detected by the MPU
   int16_t gyroX; // rotation along x axis
   int16_t gyroY; // rotation along y axis
@@ -57,3 +72,4 @@ MPU6050 mpu; // makes an MPU object to be used durin initialization
 MPUSensorValues mpuSensorValues;
 MusicParameters musicParameters;
 Buttons button;
+

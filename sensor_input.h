@@ -37,20 +37,20 @@ void controlVolume(MPUSensorValues mpuSensorValues, MusicParameters *musicParame
     lastVolChange = currentMillis;
 
     if ((mpuSensorValues.gyroX < POS_THRESHOLD)){ // if mpu gets under -75 degrees decrease volume level
-      Serial.println("Decreaseing..."); 
-      if (!(musicParameters->volume >= MAX_VOLUME)) { 
+      // Serial.println("Decreaseing..."); 
+      if (!(musicParameters->volume <= 0)) { 
         musicParameters->volume -= volumeChangePercentage; 
       }
 
     } else if ((mpuSensorValues.gyroX > NEG_THRESHOLD)){ // if mpu gets over 75 degrees increase volume level
-      Serial.println("Increasing..."); 
-      if (!(musicParameters->volume <= 0)) { 
+      // Serial.println("Increasing..."); 
+      if (!(musicParameters->volume >= MAX_VOLUME)) { 
         musicParameters->volume += volumeChangePercentage; 
       }
       
     } 
   }
-  Serial.println(musicParameters->volume);
+  // Serial.println(musicParameters->volume);
 }
 
 void controlTouchSensors(){ // keep track of button states to send to app via bluetooth

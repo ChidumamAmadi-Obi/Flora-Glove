@@ -1,5 +1,6 @@
 #include "config.h"
 #include "sensor_input.h"
+#include "bluetooth.h"
 
 void setup() {
   Serial.begin(115200);
@@ -7,6 +8,11 @@ void setup() {
 
   Wire.begin(); // init i2c communication with mpu
   mpu.initialize(); // init mpu
+
+  SerialBT.begin("MusicGlove");
+
+  if (SerialBT.available()) Serial.println("BLUETOOTH CONNECTED");
+  else Serial.println("BLUETOOTH NOT CONNECTED");
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
@@ -23,6 +29,7 @@ void loop() {
   mpuSensorValues = scanMPU(); // monitor and record MPU sensor data
   controlTouchSensors(); // monitor touch sensors (includes LED control)
   controlVolume(mpuSensorValues,&musicParameters);
-  delay(100);
 
+  sendDataToApp(mpuSensorValues,musicParameters,button); // sends all data to app via bluetooth
+  delay(100);
 }
