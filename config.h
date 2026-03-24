@@ -42,11 +42,9 @@ int volumeChangePercentage=5;
 // an enum is used to send codes to app via bluetooth
 // the app cannot handle strings so data has to be encoded
 typedef enum{
-  BUTTON_ONE_ON, // 0
-  BUTTON_ONE_OFF, // 1
+  BUTTON_ONE_ON, // 1
   BUTTON_TWO_ON, // 2
-  BUTTON_TWO_OFF, // 3
-  VOLUME_ENCODING=5 // 10
+  VOLUME_ENCODING=5 // 5
 }InputCodes;
 
 // structs will be used to pass sensor information easily and cleanly to the application
