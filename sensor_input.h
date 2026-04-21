@@ -66,18 +66,6 @@ void controlTouchSensors(){ // keep track of button states to send to app via bl
     button.two=false;
   }
 
-  if (digitalRead(BUTTON3)) {
-    button.three=true;
-  } else {
-    button.three=false;
-  }
-
-  if (digitalRead(BUTTON4)) {
-    button.four=true;
-  } else {
-    button.four=false;
-  }
-
   toggleLEDs(button); // handle led flashing 
 }
 

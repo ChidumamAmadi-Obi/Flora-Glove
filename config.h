@@ -11,13 +11,10 @@ BluetoothSerial SerialBT;
 // PIN NUMBERS
 // SDA 21
 // SCL 22
-#define BUTTON1 34
-#define BUTTON2 35
-#define BUTTON3 32
-#define BUTTON4 33
-#define LED1 25
-#define LED2 26
-#define LED3 27
+#define BUTTON1 25
+#define BUTTON2 26
+#define BUTTON3 18
+#define LED1 32
 
 // calibration for mpu DONT TOUCH OR CHANGE
 #define X_OFFSET 118
@@ -45,7 +42,6 @@ typedef enum{
   BUTTON_ONE_ON, // 1
   BUTTON_TWO_ON, // 2
   BUTTON_THREE_ON, // 3
-  BUTTON_FOUR_ON, // 4
   VOLUME_ENCODING=5 // 5
 }InputCodes;
 
@@ -73,3 +69,4 @@ MPUSensorValues mpuSensorValues;
 MusicParameters musicParameters;
 Buttons button;
 
+int ledstatus=0;
