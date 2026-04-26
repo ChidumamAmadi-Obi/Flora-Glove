@@ -15,13 +15,9 @@ void setup() {
   else Serial.println("BLUETOOTH NOT CONNECTED");
 
   pinMode(LED1, OUTPUT);
-  pinMode(LED2, OUTPUT);
-  pinMode(LED3, OUTPUT);
   pinMode(BUTTON1, INPUT);
   pinMode(BUTTON2, INPUT);
   pinMode(BUTTON3, INPUT);
-  pinMode(BUTTON4, INPUT);
-
   delay(100);
 }
 
@@ -31,5 +27,6 @@ void loop() {
   controlVolume(mpuSensorValues,&musicParameters);
 
   sendDataToApp(mpuSensorValues,musicParameters,button); // sends all data to app via bluetooth
+
   delay(100);
 }
